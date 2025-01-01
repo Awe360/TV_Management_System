@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
-  apiKey: "AIzaSyArFn5h3UMO8PcWBPM2Ve1tXUXEc3UsYpM",
-  authDomain: "reactfirebase-dd3a0.firebaseapp.com",
-  projectId: "reactfirebase-dd3a0",
-  storageBucket: "reactfirebase-dd3a0.firebasestorage.app",
-  messagingSenderId: "784948701391",
-  appId: "1:784948701391:web:4179b765719716d68a2fba"
+  apiKey: "AIzaSyA7hQVOlUAifbOr2T0eH92tYaBidK9tcsU",
+  authDomain: "tvms-ad431.firebaseapp.com",
+  projectId: "tvms-ad431",
+  storageBucket: "tvms-ad431.firebasestorage.app",
+  messagingSenderId: "254244045938",
+  appId: "1:254244045938:web:a81894a16b53014ea8eeeb"
 };
 
 // Initialize Firebase
