@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Updated import
-import { dataBase } from '../config/firebase'; // Firestore config
+import { dataBase } from '../../config/firebase'; // Firestore config
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const TVDisplayPage = () => {
