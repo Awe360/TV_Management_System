@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Updated import
-import { dataBase } from '../config/firebase'; // Firestore config
+import { useRouter } from 'next/navigation'; 
+import { dataBase } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import { Loader } from 'lucide-react';
 
 const TVDisplayPage = () => {
-  const router = useRouter(); // Correctly initialize router
+  const router = useRouter();
   const [inputId, setInputId] = useState('');
   const [error, setError] = useState(null);
   const [showInput, setShowInput] = useState(false);
@@ -109,7 +110,7 @@ const TVDisplayPage = () => {
     <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-xl mx-auto text-center bg-black rounded-lg shadow-xl p-4">
         {validating ? (
-          <h1 className="text-3xl font-bold text-white mb-4">Loading...</h1>
+          <h1 className="text-3xl font-bold text-white mb-4"><Loader className='w-8 h-8 animate-spin  mx-auto' /></h1>
         ) : (
           <>
             <h1 className="text-3xl font-bold text-white mb-4">

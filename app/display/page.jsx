@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Updated import
-import { dataBase } from '../../config/firebase'; // Firestore config
+import { useRouter } from 'next/navigation'; 
+import { dataBase } from '../../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-const TVDisplayPage = () => {
-  const router = useRouter(); // Correctly initialize router
+const ValidatorPage = () => {
+  const router = useRouter(); 
   const [inputId, setInputId] = useState('');
   const [error, setError] = useState(null);
   const [showInput, setShowInput] = useState(false);
@@ -143,4 +143,4 @@ const TVDisplayPage = () => {
   );
 };
 
-export default TVDisplayPage;
+export default ValidatorPage;

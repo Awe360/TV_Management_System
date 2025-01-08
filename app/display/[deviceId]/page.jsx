@@ -1,16 +1,14 @@
 'use client'
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { dataBase } from '../../../config/firebase'; // Adjust the path as needed
 import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { dataBase } from '@/config/firebase';
 
 const TVScreen = () => {
-  const [collectionData, setCollectionData] = useState(null); // Store fetched data
-  const [error, setError] = useState(null); // Store errors if any
+  const [collectionData, setCollectionData] = useState(null);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
-  // Retrieve adminId and deviceId from localStorage
   const adminId = typeof window !== 'undefined' ? localStorage.getItem('adminId') : null;
   const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
 
@@ -58,7 +56,6 @@ const TVScreen = () => {
     return () => unsubscribe();
   }, [deviceId]);
 
-  // Render loading or error states
   if (error) {
     return <p className="text-lg text-red-500">{error}</p>;
   }

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { dataBase } from '../../config/firebase'; // Your Firebase configuration file
+import { dataBase } from '../../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 const RegisterTVPage = () => {
@@ -29,19 +29,17 @@ const RegisterTVPage = () => {
     }
 
     try {
-      // Add TV to the 'registeredTV' collection
       const tvCollectionRef = collection(dataBase, 'registeredTV');
       await addDoc(tvCollectionRef, tvData);
 
-      // Create a new collection with the TV ID and add a document inside it
-      const newTvCollectionRef = collection(dataBase, tvData.ID); // Use TV ID as collection name
+      const newTvCollectionRef = collection(dataBase, tvData.ID);
       await addDoc(newTvCollectionRef, {
-        status: 'active', // Example initial data
+        status: 'active',
         registeredAt: new Date(),
       });
 
       setMessage('TV registered successfully!');
-      setTvData({ ID: '', model: '', size: '' }); // Clear the form
+      setTvData({ ID: '', model: '', size: '' }); 
     } catch (error) {
       console.error('Error registering TV:', error);
       setMessage('Failed to register TV. Please try again.');
@@ -49,7 +47,7 @@ const RegisterTVPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-4">Register New TV</h1>
         {message && <p className="text-center text-sm mb-4">{message}</p>}

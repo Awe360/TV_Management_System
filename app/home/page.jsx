@@ -2,46 +2,44 @@
 
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { dataBase } from '../../config/firebase'; // Your Firestore config
-
+import { dataBase } from '../../config/firebase'; 
+import { Button } from '@/components/ui/button';
+import { Loader } from 'lucide-react';
 const HomePage = () => {
   const [tvOptions, setTvOptions] = useState([]);
   const [selectedTV, setSelectedTV] = useState('');
   const [currentMedia, setCurrentMedia] = useState(null);
+  const[isLoading,setIsLoading]=useState(false);
 
-  // Fetch TV options in real time
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(dataBase, 'registeredTV'), (snapshot) => {
       const tvs = snapshot.docs.map(doc => doc.data().ID);
       setTvOptions(tvs);
-      if (tvs.length > 0) setSelectedTV(tvs[0]); // Set default selected TV
+      if (tvs.length > 0) setSelectedTV(tvs[0]); 
     });
     
-    // Cleanup listener
     return () => unsubscribe();
   }, []);
 
-  // Fetch current media when selected TV changes
   useEffect(() => {
     if (!selectedTV) return;
     const unsubscribe = onSnapshot(collection(dataBase, selectedTV), (snapshot) => {
       const media = snapshot.docs.map(doc => doc.data());
-      setCurrentMedia(media[0] || null); // Assuming one media per TV
+      setCurrentMedia(media[0] || null); 
     });
 
     return () => unsubscribe();
   }, [selectedTV]);
 
-  // Helper function to check if media type starts with a given prefix
   const mediaTypeValid = (mediaType, prefix) => {
     return mediaType && mediaType.startsWith(prefix);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center  ">
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center  ">
       {/* Header */}
-      <header className="text-4xl font-semibold text-gray-800 pt-5 ">
-        <h1 className='text-yellow-400 font-bold'>Welcome to the Media Upload System</h1>
+      <header className="text-4xl font-semibold text-gray-800 pt-5 w-full ">
+        <h1 className='text-yellow-400 font-bold text-center'>Welcome to the Media Upload System</h1>
       </header>
 
       {/* TV Selection Dropdown */}
@@ -75,14 +73,14 @@ const HomePage = () => {
           ) : currentMedia.mediaType === 'image/gif' ? (
             <img src={currentMedia.media} alt="Current GIF" className="mx-auto rounded-lg shadow-md" />
           ) : (
-            <p className="text-gray-500">No media uploaded yet.</p>
+            <Loader className='w-10 h-10 animate-spin  mx-auto' />
           )
         ) : (
-          <p className="text-gray-500">No media uploaded yet.</p>
+          <Loader className='w-10 h-10 animate-spin  mx-auto' />
         )}
       </div>
 
-      {/* Upload Button */}
+     
       <div>
 
       </div>
