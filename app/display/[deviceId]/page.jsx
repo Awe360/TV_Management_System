@@ -3,19 +3,26 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { dataBase } from '@/config/firebase';
+import { Loader } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDeviceType } from '@/redux/slices/tvSlice';
 
 const TVScreen = () => {
   const [collectionData, setCollectionData] = useState(null);
   const [error, setError] = useState(null);
+  const[load,setLoad]=useState(false);
   const router = useRouter();
 
   const adminId = typeof window !== 'undefined' ? localStorage.getItem('adminId') : null;
   const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
+  const dispatch=useDispatch();
+  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
 
   useEffect(() => {
     const validateAdminId = async () => {
       try {
         if (adminId) {
+          dispatch(setDeviceType("Admin"))
           const adminDocRef = doc(dataBase, 'admin', adminId);
           const adminDocSnap = await getDoc(adminDocRef);
 
@@ -39,6 +46,7 @@ const TVScreen = () => {
 
   useEffect(() => {
     if (!deviceId) return;
+    dispatch(setDeviceType("TV"))
 
     const tvCollectionRef = collection(dataBase, deviceId);
     const tvQuery = query(tvCollectionRef, orderBy('timestamp', 'desc'), limit(1));
@@ -61,46 +69,62 @@ const TVScreen = () => {
   }
 
   if (!adminId && !deviceId) {
-    return <p className="text-lg text-gray-500">Loading...</p>;
+    return <p className="text-lg text-gray-500"><Loader className='w-10 h-10 animate-spin  mx-auto' /></p>;
   }
 
+  
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-xl mx-auto text-center bg-black rounded-lg shadow-xl p-4">
-        <h1 className="text-3xl font-bold text-white mb-4">TV Screen</h1>
-
+    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-800 w-screen h-screen flex items-center justify-center">
+      <div className="w-full h-full text-center flex flex-col items-center justify-center">
+        
+  
         {!collectionData ? (
-          <p className="text-lg text-gray-500">Loading media...</p>
+          <p className="text-lg text-gray-400">
+            <Loader className="w-12 h-12 animate-spin mx-auto text-blue-500" />
+          </p>
         ) : (
-          <div className="relative">
+          <div className="relative w-full h-full bg-black overflow-hidden">
             {/* Display Image */}
-            {collectionData.media && collectionData.media.includes('image') && !collectionData.media.includes('gif') && (
-              <img
-                src={collectionData.media}
-                alt="Uploaded"
-                className="w-full h-64 object-cover rounded-lg"
-              />
-            )}
+            {collectionData.media &&
+              collectionData.media.includes("image") &&
+              !collectionData.media.includes("gif") && (
+                <img
+                  src={collectionData.media}
+                  alt="Uploaded"
+                  className="w-full h-full object-fit"
+                />
+              )}
             {/* Display Video */}
-            {collectionData.media && collectionData.media.includes('video') && (
-              <video className="w-full h-64 object-cover rounded-lg" controls>
-                <source src={collectionData.media} />
-                Your browser does not support the video tag.
-              </video>
-            )}
+            {collectionData.media &&
+              collectionData.media.includes("video") && (
+                <video
+                  className="w-full h-full object-fit"
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                >
+                  <source src={collectionData.media} />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             {/* Display GIF */}
-            {collectionData.media && collectionData.media.includes('gif') && (
-              <img
-                src={collectionData.media}
-                alt="Uploaded GIF"
-                className="w-full h-64 object-cover rounded-lg"
-              />
-            )}
+            {collectionData.media &&
+              collectionData.media.includes("gif") && (
+                <img
+                  src={collectionData.media}
+                  alt="Uploaded GIF"
+                  className="w-full h-full object-fit"
+                />
+              )}
           </div>
         )}
       </div>
     </div>
   );
+  
+  
+  
 };
 
 export default TVScreen;

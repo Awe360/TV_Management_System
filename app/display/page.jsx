@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { dataBase } from '../../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDeviceType } from '@/redux/slices/tvSlice';
+import { Loader } from 'lucide-react';
 
 const ValidatorPage = () => {
   const router = useRouter(); 
@@ -12,6 +15,8 @@ const ValidatorPage = () => {
   const [showInput, setShowInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [validating, setValidating] = useState(true);
+  const dispatch=useDispatch();
+  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
 
   useEffect(() => {
     const validateAdminOrDeviceId = async () => {
@@ -19,6 +24,8 @@ const ValidatorPage = () => {
       const storedDeviceId = localStorage.getItem('deviceId');
 
       if (storedAdminId) {
+        dispatch(setDeviceType("Admin"))
+
         try {
           const q = query(
             collection(dataBase, 'admin'),
@@ -37,6 +44,7 @@ const ValidatorPage = () => {
           setError('An error occurred while validating Admin ID.');
         }
       } else if (storedDeviceId) {
+        dispatch(setDeviceType("TV"))
         try {
           const q = query(
             collection(dataBase, 'registeredTV'),
@@ -62,6 +70,7 @@ const ValidatorPage = () => {
 
     validateAdminOrDeviceId();
   }, [router]);
+  console.log("device type:",deviceType);
 
   const handleIdSubmit = async (e) => {
     e.preventDefault();

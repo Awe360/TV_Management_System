@@ -16,6 +16,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
+
 
 // Menu items.
 const items = [
@@ -58,10 +60,15 @@ const account=[{
 ]
 
 export function AppSidebar() {
+  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
   const router=usePathname();
   // const isActive=router.includes(`/${item.url}`)
 console.log("awoke",router);
+if(deviceType ==='TV'){
+  return null;
+}
   return (
+    
     <Sidebar className="bg-blue-900 text-white w-64  border-t-2 ">
       <SidebarContent>
         <SidebarGroup>

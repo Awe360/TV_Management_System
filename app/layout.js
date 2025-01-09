@@ -2,14 +2,11 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./pcomponents/Navbar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import StoreProvider from "@/redux/provider/StoreProvider";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,30 +24,34 @@ const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Initialize variables for adminId and deviceId
+  let storedAdminId = null;
+  let storedDeviceId = null;
+
+  // Check if the code is running in the browser
+  if (typeof window !== 'undefined') {
+    storedAdminId = localStorage.getItem('adminId');
+    storedDeviceId = localStorage.getItem('deviceId');
+  }
+
   return (
     <StoreProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-         <SidebarProvider>
-          <div className="flex flex-grow">
-
-         <AppSidebar/>
-         {/* <Button className="bg-red-500">Submit</Button> */}
-         
-         <main className="w-full">
-        {/* <Navbar/> */}
-        <SidebarTrigger/>
-        <ToastContainer theme="dark"/>
-        {children}
-        </main>
-          </div>
-        </SidebarProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <SidebarProvider>
+            <div className="flex flex-grow">
+              {/* Render Sidebar Trigger only if adminId is available */}
+              {storedAdminId ? <SidebarTrigger /> : null}
+              <main className="w-full">
+                <ToastContainer theme="dark" />
+                {children}
+              </main>
+            </div>
+          </SidebarProvider>
+        </body>
+      </html>
     </StoreProvider>
-
   );
-  
 }
