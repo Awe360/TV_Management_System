@@ -1,3 +1,5 @@
+'use client'
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./pcomponents/Navbar";
@@ -6,6 +8,9 @@ import { AppSidebar } from "@/components/ui/app-sidebar";
 import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import StoreProvider from "@/redux/provider/StoreProvider";
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,13 +21,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+const metadata = {
   title: "TV Management System",
   description: "TV Management System",
 };
 
 export default function RootLayout({ children }) {
   return (
+    <StoreProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -43,6 +49,7 @@ export default function RootLayout({ children }) {
         </SidebarProvider>
       </body>
     </html>
+    </StoreProvider>
 
   );
   

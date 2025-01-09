@@ -5,21 +5,31 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { dataBase } from '../../config/firebase'; 
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTvCount } from '@/redux/slices/tvSlice';
+
 const HomePage = () => {
   const [tvOptions, setTvOptions] = useState([]);
   const [selectedTV, setSelectedTV] = useState('');
   const [currentMedia, setCurrentMedia] = useState(null);
   const[isLoading,setIsLoading]=useState(false);
+  const dispatch=useDispatch();
+  const totTv=useSelector((state)=>state.tvReducer.totTV);
+  
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(dataBase, 'registeredTV'), (snapshot) => {
       const tvs = snapshot.docs.map(doc => doc.data().ID);
+      console.log("awoke:",tvs.length)
       setTvOptions(tvs);
+      dispatch(setTvCount(tvs.length));
+      
       if (tvs.length > 0) setSelectedTV(tvs[0]); 
     });
     
     return () => unsubscribe();
   }, []);
+  
 
   useEffect(() => {
     if (!selectedTV) return;
@@ -34,7 +44,7 @@ const HomePage = () => {
   const mediaTypeValid = (mediaType, prefix) => {
     return mediaType && mediaType.startsWith(prefix);
   };
-
+  console.log("total tv:",totTv);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center  ">
       {/* Header */}
@@ -57,6 +67,7 @@ const HomePage = () => {
             <option key={tv} value={tv}>{tv}</option>
           ))}
         </select>
+        {totTv>0 && <div className="my-3"><p className='bg-green-500 text-white font-bold text-xl text-center py-3'>Total Registered TVs:{totTv}</p></div>}
       </div>
 
       {/* Current Media Display */}
