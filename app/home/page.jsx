@@ -39,7 +39,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center  ">
       {/* Header */}
       <header className="text-4xl font-semibold text-gray-800 pt-5 w-full ">
-        <h1 className='text-yellow-400 font-bold text-center'>Welcome to the Media Upload System</h1>
+        <h1 className='bg-yellow-400 py-2 font-bold text-center font-serif'>Welcome to the Media Upload System</h1>
       </header>
 
       {/* TV Selection Dropdown */}
@@ -66,7 +66,7 @@ const HomePage = () => {
           mediaTypeValid(currentMedia.mediaType, 'image') && !currentMedia.mediaType.includes('gif') ? (
             <img src={currentMedia.media} alt="Current Media" className="mx-auto rounded-lg shadow-md" />
           ) : mediaTypeValid(currentMedia.mediaType, 'video') ? (
-            <video controls className="mx-auto rounded-lg shadow-md" width="300">
+            <video controls className="mx-auto rounded-lg shadow-md" width="500">
               <source src={currentMedia.media} type={currentMedia.mediaType} />
               Your browser does not support the video tag.
             </video>

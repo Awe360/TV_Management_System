@@ -8,6 +8,7 @@ export default function UploadSelector() {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("");
   const[load,setLoad]=useState(false);
+  const[isLoad,setIsLoad]=useState(false);
 
   const handleSelection = (choice) => {
     setSelectedOption(choice);
@@ -29,7 +30,7 @@ export default function UploadSelector() {
         </p>
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
           <button
-            onClick={() => handleSelection("upload")}
+            onClick={() => {handleSelection("upload"),setLoad((prev)=>!prev)}}
             className={`w-full md:w-1/2 py-4 text-lg md:text-xl font-semibold rounded-lg shadow-md transition-all duration-300 ${
               selectedOption === "upload"
                 ? "bg-blue-600 text-white scale-105"
@@ -39,14 +40,14 @@ export default function UploadSelector() {
            { load? <Loader className='w-6 h-6 animate-spin  mx-auto' /> :"Upload from Computer"}
           </button>
           <button
-            onClick={() => {setLoad((prev)=>!prev),handleSelection("create")}}
+            onClick={() => {handleSelection("create"),setIsLoad((prev)=>!prev)}}
             className={`w-full md:w-1/2 py-4 text-lg md:text-xl font-semibold rounded-lg shadow-md transition-all duration-300 ${
               selectedOption === "create"
                 ? "bg-green-600 text-white scale-105"
                 : "bg-green-500 text-white hover:bg-green-600 hover:scale-105"
             }`}
           >
-            Create New Content
+            { isLoad? <Loader className='w-6 h-6 animate-spin  mx-auto' /> :"Create New Content"}
           </button>
         </div>
       </div>
