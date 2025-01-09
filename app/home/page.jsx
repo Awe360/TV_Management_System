@@ -6,7 +6,7 @@ import { dataBase } from '../../config/firebase';
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDeviceType, setTvCount } from '@/redux/slices/tvSlice';
+import { setTvCount } from '@/redux/slices/tvSlice';
 
 const HomePage = () => {
   const [tvOptions, setTvOptions] = useState([]);
@@ -15,15 +15,7 @@ const HomePage = () => {
   const[isLoading,setIsLoading]=useState(false);
   const dispatch=useDispatch();
   const totTv=useSelector((state)=>state.tvReducer.totTV);
-  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
-  const storedAdminId = localStorage.getItem('adminId');
-  const storedDeviceId = localStorage.getItem('deviceId');
-  if(storedAdminId){
-    dispatch(setDeviceType("Admin"))
-  }
-  else if(storedDeviceId){
-    dispatch(setDeviceType("TV"))
-  }
+  
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(dataBase, 'registeredTV'), (snapshot) => {
@@ -53,7 +45,6 @@ const HomePage = () => {
     return mediaType && mediaType.startsWith(prefix);
   };
   console.log("total tv:",totTv);
-  console.log("device Type:",deviceType);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center  ">
       {/* Header */}
@@ -65,6 +56,7 @@ const HomePage = () => {
       <div className="mb-6">
         <label htmlFor="tv-select" className="block text-lg font-medium text-gray-700 mb-2 pt-5">
           Select a TV to see what contents are displaying now
+          {totTv}
         </label>
         <select
           id="tv-select"
@@ -76,8 +68,6 @@ const HomePage = () => {
             <option key={tv} value={tv}>{tv}</option>
           ))}
         </select>
-        {totTv>0 && <div className="my-3"><p className='bg-green-500 text-white font-bold text-xl text-center py-3'>Total Registered TVs:{totTv}</p></div>}
-        <p>Device type: {deviceType}</p>
       </div>
 
       {/* Current Media Display */}

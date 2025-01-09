@@ -60,11 +60,14 @@ const account=[{
 ]
 
 export function AppSidebar() {
+  const adminId = typeof window !== 'undefined' ? localStorage.getItem('adminId') : null;
+  const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
   const deviceType=useSelector((state)=>state.tvReducer.deviceType);
   const router=usePathname();
   // const isActive=router.includes(`/${item.url}`)
 console.log("awoke",router);
-if(deviceType ==='TV'){
+console.log("device:",deviceType);
+if(deviceId || (!adminId && !deviceId)){
   return null;
 }
   return (

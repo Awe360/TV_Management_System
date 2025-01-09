@@ -43,7 +43,8 @@ export default function RootLayout({ children }) {
           <SidebarProvider>
             <div className="flex flex-grow">
               {/* Render Sidebar Trigger only if adminId is available */}
-              {storedAdminId ? <SidebarTrigger /> : null}
+              <AppSidebar/>
+              {storedAdminId ? <SidebarTrigger /> :null}
               <main className="w-full">
                 <ToastContainer theme="dark" />
                 {children}
