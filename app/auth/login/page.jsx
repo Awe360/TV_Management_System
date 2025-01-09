@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+  // const githubProvider = new GithubAuthProvider();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,14 +32,14 @@ const LoginPage = () => {
     }
   };
 
-  const handleGitHubLogin = async () => {
-    try {
-      await signInWithPopup(auth, githubProvider);
-      router.push("/home"); // Redirect after successful GitHub login
-    } catch (err) {
-      setError(err.message); // Show Firebase error message
-    }
-  };
+  // const handleGitHubLogin = async () => {
+  //   try {
+  //     await signInWithPopup(auth, githubProvider);
+  //     router.push("/home"); // Redirect after successful GitHub login
+  //   } catch (err) {
+  //     setError(err.message); // Show Firebase error message
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -104,12 +104,12 @@ const LoginPage = () => {
             >
               Google
             </button>
-            <button
+            {/* <button
               onClick={handleGitHubLogin}
               className="w-full px-4 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-900"
             >
               GitHub
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
