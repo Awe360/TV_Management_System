@@ -49,12 +49,12 @@ const HomePage = () => {
   console.log("total tv:",totTv);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center  ">
-      {/* Header */}
+   
       <header className="text-4xl font-semibold text-gray-800 pt-5 w-full ">
         <h1 className='bg-yellow-400 py-2 font-bold text-center font-serif'>Welcome to the Media Upload System</h1>
       </header>
       {temp>0 ? <div className="bg-green-500 text-white text-3xl p-2 w-full text-center">Total Registered TVs:<span className='text-blue-500 font-bold font-mono text-3xl mx-2 '>{totTv}</span></div>:null}
-      {/* TV Selection Dropdown */}
+    
       <div className="mb-6">
         <label htmlFor="tv-select" className="block text-lg font-medium text-gray-700 mb-2 pt-5">
           Select a TV to see what contents are displaying now
@@ -72,7 +72,6 @@ const HomePage = () => {
         </select>
       </div>
 
-      {/* Current Media Display */}
       <div className="mb-8 w-full max-w-md text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Current Media</h2>
         {currentMedia ? (

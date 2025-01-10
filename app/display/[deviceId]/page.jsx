@@ -84,7 +84,7 @@ const TVScreen = () => {
           </p>
         ) : (
           <div className="relative w-full h-full bg-black overflow-hidden">
-            {/* Display Image */}
+           
             {collectionData.media &&
               collectionData.media.includes("image") &&
               !collectionData.media.includes("gif") && (
@@ -94,7 +94,7 @@ const TVScreen = () => {
                   className="w-full h-full object-fit"
                 />
               )}
-            {/* Display Video */}
+            
             {collectionData.media &&
               collectionData.media.includes("video") && (
                 <video
@@ -108,7 +108,7 @@ const TVScreen = () => {
                   Your browser does not support the video tag.
                 </video>
               )}
-            {/* Display GIF */}
+           
             {collectionData.media &&
               collectionData.media.includes("gif") && (
                 <img

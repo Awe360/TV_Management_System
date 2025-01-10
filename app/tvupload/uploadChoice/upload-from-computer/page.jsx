@@ -18,12 +18,11 @@ const MediaUpload = () => {
   const [tvOptions, setTvOptions] = useState([]);
 
   const fetchCollection = (tvName) => {
-    return collection(dataBase, tvName); // Return collection reference based on TV selection
+    return collection(dataBase, tvName); 
   };
 
-  const tvDisplayRef = fetchCollection(selectedTV); // Fetch the correct collection based on the selected TV
+  const tvDisplayRef = fetchCollection(selectedTV); 
 
-  // Fetch the existing file when the component mounts
   useEffect(() => {
     const fetchExistingFile = async () => {
       const querySnapshot = await getDocs(tvDisplayRef);
@@ -32,21 +31,21 @@ const MediaUpload = () => {
       });
     };
     fetchExistingFile();
-  }, [selectedTV]); // Run when TV selection changes
+  }, [selectedTV]); 
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    setMediaType(selectedFile?.type); // Ensure mediaType is set
+    setMediaType(selectedFile?.type); 
   };
 
   const handleDeleteExistingDocument = async () => {
     try {
-      const q = query(tvDisplayRef, limit(1)); // Query for the existing document
+      const q = query(tvDisplayRef, limit(1));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        const docToDelete = querySnapshot.docs[0]; // Get the first (and only) document
+        const docToDelete = querySnapshot.docs[0]; 
         console.log('Deleting existing document:', docToDelete.id);
         await deleteDoc(docToDelete.ref); 
       }
@@ -60,7 +59,6 @@ const MediaUpload = () => {
     if (file) {
       setUploading(true);
 
-      // First, delete the previous file (if any)
       try {
         await handleDeleteExistingDocument();
 
@@ -79,8 +77,6 @@ const MediaUpload = () => {
           alert('Please upload a valid media type (image, video, or GIF).');
           return;
         }
-
-        // Upload the file to Cloudinary
         const { data } = await axios.post(uploadUrl, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -88,7 +84,6 @@ const MediaUpload = () => {
         const cloudinaryUrl = data.secure_url;
         setMediaUrl(cloudinaryUrl);
 
-        // Save the new media URL and timestamp to Firestore
         await addDoc(tvDisplayRef, {
           name,
           media: cloudinaryUrl,
@@ -121,7 +116,7 @@ useEffect(() => {
       
       <h2 className="text-3xl font-semibold text-blue-500 mb-6 text-center">Upload Media </h2>
 
-      {/* Dropdown for selecting TV */}
+    
       <div className="mb-4">
         <label htmlFor="tv-select" className="block text-lg font-medium text-gray-700 mb-2">Select TV</label>
         <select

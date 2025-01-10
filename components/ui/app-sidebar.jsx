@@ -19,7 +19,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
 
-// Menu items.
+
 const items = [
   {
     title: "Home",
@@ -64,7 +64,7 @@ export function AppSidebar() {
   const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
   const deviceType=useSelector((state)=>state.tvReducer.deviceType);
   const router=usePathname();
-  // const isActive=router.includes(`/${item.url}`)
+ 
 console.log("awoke",router);
 console.log("device:",deviceType);
 if(deviceId || (!adminId && !deviceId)){
