@@ -13,6 +13,7 @@ const HomePage = () => {
   const [selectedTV, setSelectedTV] = useState('');
   const [currentMedia, setCurrentMedia] = useState(null);
   const[isLoading,setIsLoading]=useState(false);
+  const[temp,setTemp]=useState(0);
   const dispatch=useDispatch();
   const totTv=useSelector((state)=>state.tvReducer.totTV);
   
@@ -22,6 +23,7 @@ const HomePage = () => {
       const tvs = snapshot.docs.map(doc => doc.data().ID);
       console.log("awoke:",tvs.length)
       setTvOptions(tvs);
+      setTemp(tvs.length);
       dispatch(setTvCount(tvs.length));
       
       if (tvs.length > 0) setSelectedTV(tvs[0]); 
@@ -51,12 +53,12 @@ const HomePage = () => {
       <header className="text-4xl font-semibold text-gray-800 pt-5 w-full ">
         <h1 className='bg-yellow-400 py-2 font-bold text-center font-serif'>Welcome to the Media Upload System</h1>
       </header>
-
+      {temp>0 ? <div className="bg-green-500 text-white text-3xl p-2 w-full text-center">Total Registered TVs:<span className='text-blue-500 font-bold font-mono text-3xl mx-2 '>{totTv}</span></div>:null}
       {/* TV Selection Dropdown */}
       <div className="mb-6">
         <label htmlFor="tv-select" className="block text-lg font-medium text-gray-700 mb-2 pt-5">
           Select a TV to see what contents are displaying now
-          {totTv}
+         
         </label>
         <select
           id="tv-select"
