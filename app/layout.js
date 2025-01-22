@@ -29,10 +29,10 @@ export default function RootLayout({ children }) {
   let storedDeviceId = null;
 
  
-  // if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     storedAdminId = localStorage.getItem('adminId');
     storedDeviceId = localStorage.getItem('deviceId');
-  // }
+  }
 
   return (
     // <StoreProvider>
