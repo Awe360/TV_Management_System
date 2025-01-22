@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { dataBase } from '@/config/firebase';
 import { Loader } from 'lucide-react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDeviceType } from '@/redux/slices/tvSlice';
 
 const TVScreen = () => {
@@ -15,8 +15,8 @@ const TVScreen = () => {
 
   const adminId = typeof window !== 'undefined' ? localStorage.getItem('adminId') : null;
   const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
-  // const dispatch=useDispatch();
-  // const deviceType=useSelector((state)=>state.tvReducer.deviceType);
+  const dispatch=useDispatch();
+  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
 
   useEffect(() => {
     const validateAdminId = async () => {

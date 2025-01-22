@@ -6,7 +6,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import StoreProvider from "@/redux/provider/StoreProvider";
+import StoreProvider from "@/redux/provider/StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
   }
 
   return (
-    // <StoreProvider>
+    <StoreProvider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -53,6 +53,6 @@ export default function RootLayout({ children }) {
           </SidebarProvider>
         </body>
       </html>
-    // </StoreProvider>
+    </StoreProvider>
   );
 }
