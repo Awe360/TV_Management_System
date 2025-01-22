@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 
 
@@ -62,11 +62,11 @@ const account=[{
 export function AppSidebar() {
   const adminId = typeof window !== 'undefined' ? localStorage.getItem('adminId') : null;
   const deviceId = typeof window !== 'undefined' ? localStorage.getItem('deviceId') : null;
-  const deviceType=useSelector((state)=>state.tvReducer.deviceType);
+  // const deviceType=useSelector((state)=>state.tvReducer.deviceType);
   const router=usePathname();
  
 console.log("awoke",router);
-console.log("device:",deviceType);
+// console.log("device:",deviceType);
 if(deviceId || (!adminId && !deviceId)){
   return null;
 }
